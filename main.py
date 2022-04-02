@@ -5,7 +5,7 @@ import Stage2
 import Stage3
 import Stage4
 
-GITHUB_TOKEN = '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'
+GITHUB_TOKEN = '' #ENTER TOKEN HERE
 REPO = "freeCodeCamp/freeCodeCamp"
 
 if __name__ == '__main__':
