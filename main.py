@@ -1,30 +1,12 @@
 from xml.etree.ElementTree import Comment
-from github import Github
-import csv
+
+import Stage1
+import Stage2
+import Stage3
+import Stage4
+
+GITHUB_TOKEN = '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'
+REPO = "freeCodeCamp/freeCodeCamp"
 
 if __name__ == '__main__':
-    g = Github(github_token)
-    repo = g.get_repo("freeCodeCamp/freeCodeCamp")
-
-csvFile = open('data.csv', 'w')
-
-csv_columns = ['state','opened_at','closed_at','labels','comments','assignees']
-
-writer = csv.DictWriter(csvFile, fieldnames=csv_columns)
-writer.writeheader()
-
-issues  = repo.get_issues(state='all')
-
-for issue in issues:
-    writer.writerow(
-      {
-            "state" : issue.state,
-            "opened_at" : issue.created_at,
-            "closed_at" : issue.closed_at,
-            "labels" : issue.labels,
-            "comments" : issue.comments,
-            "assignees" : issue.assignees
-        }  
-    )
-
-csvFile.close()
+    Stage1.importStageOne(GITHUB_TOKEN, REPO)
