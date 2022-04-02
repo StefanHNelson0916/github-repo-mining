@@ -1,5 +1,5 @@
 virtual/
 *.xml
 *.iml
-data1.csv
+*.csv
 *.pyc
