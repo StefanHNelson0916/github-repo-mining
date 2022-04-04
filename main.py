@@ -9,6 +9,9 @@ GITHUB_TOKEN = '' #ENTER TOKEN HERE
 REPO = "freeCodeCamp/freeCodeCamp"
 
 if __name__ == '__main__':
-    Stage1.importStageOne(GITHUB_TOKEN, REPO)
-    Stage2.importStageTwo(GITHUB_TOKEN, REPO)
-    Stage3.importStageThree(GITHUB_TOKEN, REPO)
+    #Stage1.importStageOne(GITHUB_TOKEN, REPO)
+    #Stage2.importStageTwo(GITHUB_TOKEN, REPO)
+    #Stage3.importStageThree(GITHUB_TOKEN, REPO)
+
+    Stage1.filterStageOne()
+    Stage1.visualizeStageOne()
