@@ -3,3 +3,5 @@ virtual/
 *.iml
 *.csv
 *.pyc
+*.png
+.name
