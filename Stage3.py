@@ -7,7 +7,7 @@ def importStageThree(token, strRepo):
     repo = g.get_repo(strRepo)
     
     #Read commit SHAs from data2.csv
-    read_file = open('data2.csv')
+    read_file = open('data2.csv', encoding='utf-8')
     csvreader = csv.DictReader(read_file)
 
     read_file_header = []
@@ -32,7 +32,7 @@ def importStageThree(token, strRepo):
     writer.writeheader()
 
     for row in commits:
-        git_tree = repo.get_git_tree(row['commit'], True)
+        git_tree = repo.get_git_tree(row['tree_SHA'], True)
         git_tree_list = git_tree.tree
 
         for i in range(len(git_tree_list)):
