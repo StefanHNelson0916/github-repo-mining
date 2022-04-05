@@ -33,7 +33,7 @@ if __name__ == '__main__':
         Stage2.visualizeStageTwo()
     elif stageInput == 3:
         if importInput == 1:
-            print('TODO')
+            Stage3.importStageThree(GITHUB_TOKEN, REPO)
 
         print('TODO')
     elif stageInput == 4:
