@@ -1,8 +1,6 @@
 from github import Github
 from matplotlib import pyplot as plt
 from datetime import datetime, date, timedelta
-import pandas as pd
-import np
 import csv
 import os
 
@@ -115,6 +113,12 @@ def filterStageOne():
     csvFile.close()    
 
 def visualizeStageOne():
+
+    scatterCommentsTime()
+    filterStageOne()
+    linegraph()
+
+def linegraph():
     read_file = open('visualizationData1.csv')
     csvreader = csv.DictReader(read_file)
 
@@ -136,4 +140,31 @@ def visualizeStageOne():
     plt.ylabel("Number of Issues Open")
     plt.xlabel("Date")
 
+    plt.show()
+
+def scatterCommentsTime():
+
+    x = []
+    y = []
+
+    read_file = open('data1.csv')
+    csvReader = csv.DictReader(read_file)
+    # Calculate number of commits by day of week from data file,
+    for row in csvReader:
+        # Only pull closed issues and remove outliers (comments > 60)
+        if row["state"] == 'closed' and int(row["comments"]) < 60:
+            dateOpen = datetime.strptime(row["opened_at"], "%Y-%m-%d %H:%M:%S")
+            dateClose = datetime.strptime(row["closed_at"], "%Y-%m-%d %H:%M:%S")
+            daysOpen = (dateClose - dateOpen).days
+            if 1 < daysOpen < 366:
+                x.append(int(row["comments"]))
+                y.append(daysOpen)
+
+    plt.figure(figsize=(20, 15))
+    plt.scatter(x, y, alpha=0.5)
+    plt.title("Number of Comments vs Number of Days Open")
+    plt.xlabel("Number of Comments")
+    plt.ylabel("Number of Days Open")
+
+    plt.savefig("scatterCommentsTime.png")
     plt.show()

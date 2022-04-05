@@ -2,8 +2,6 @@ from github import Github
 import csv
 import os
 import matplotlib.pyplot as plt
-import numpy as np
-import matplotlib.dates as mdates
 from datetime import datetime
 import calendar
 
@@ -40,9 +38,10 @@ def importStageTwo(token, strRepo):
     csvFile.close()
 
 def visualizeStageTwo():
-    read_file = open('data2.csv')
-    csvReader = csv.DictReader(read_file)
 
+    commitsByWeekday()
+
+def commitsByWeekday():
     daysOfWeek = {
         "Sunday": 0,
         "Monday": 0,
@@ -53,10 +52,12 @@ def visualizeStageTwo():
         "Saturday": 0
     }
 
+    read_file = open('data2.csv')
+    csvReader = csv.DictReader(read_file)
     # Calculate number of commits by day of week from data file,
     for row in csvReader:
-            dayofWeek = calendar.day_name[datetime.strptime(row["date"], "%Y-%m-%d %H:%M:%S").weekday()]
-            daysOfWeek[str(dayofWeek)] += 1
+        dayofWeek = calendar.day_name[datetime.strptime(row["date"], "%Y-%m-%d %H:%M:%S").weekday()]
+        daysOfWeek[str(dayofWeek)] += 1
 
     # Convert dictionary key/value into independent lists
     days = list(daysOfWeek.keys())
