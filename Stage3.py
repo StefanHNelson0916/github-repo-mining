@@ -14,8 +14,12 @@ def importStageThree(token, strRepo):
     read_file_header = next(csvreader)
 
     commits = []
+    i = 0
     for row in csvreader:
+        if i >= 1000:
+            break
         commits.append(row)
+        i += 1
 
     read_file.close()
 
