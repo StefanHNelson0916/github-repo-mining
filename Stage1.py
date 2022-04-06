@@ -69,7 +69,7 @@ def filterStageOne():
 
     csvFile = open(file, 'w+')
 
-    csv_columns = ['date', 'num_open_issues']
+    csv_columns = ['date', 'num_open_issues','num_closed_issues']
 
     writer = csv.DictWriter(csvFile, fieldnames=csv_columns)
     writer.writeheader()
@@ -86,6 +86,7 @@ def filterStageOne():
     while date >= end_date:
 
         num_open_issues = 0
+        num_closed_issues = 0
 
         for issue in issues:
             #If the issue has a state value of open we need set issue_closed_at to datetime.now()
@@ -95,27 +96,32 @@ def filterStageOne():
                 
                 if (date >= issue_opened_at) and (date <= issue_closed_at):
                     num_open_issues += 1
+                if (date >= issue_opened_at) and (date >= issue_closed_at) :
+                    num_closed_issues += 1
             else: 
                 issue_opened_at = datetime.strptime(issue['opened_at'], '%Y-%m-%d %H:%M:%S').date()
                 issue_closed_at = datetime.strptime(issue['closed_at'], '%Y-%m-%d %H:%M:%S').date()
 
                 if (date >= issue_opened_at) and (date <= issue_closed_at):
                     num_open_issues += 1
+                if (date >= issue_opened_at) and (date >= issue_closed_at) :
+                    num_closed_issues += 1
         
         writer.writerow(
                 {
                     "date": str(date),
-                    "num_open_issues": num_open_issues
+                    "num_open_issues": num_open_issues,
+                    "num_closed_issues": num_closed_issues
                 }
             )
         date -= delta
-
+ 
     csvFile.close()    
 
 def visualizeStageOne():
 
-    scatterCommentsTime()
-    filterStageOne()
+    #scatterCommentsTime()
+    #filterStageOne()
     linegraph()
 
 def linegraph():
@@ -131,14 +137,23 @@ def linegraph():
     for row in data:
         num_open_issues.append(int(row['num_open_issues']))
 
+    num_closed_issues = []
+    for row in data:
+        num_closed_issues.append(int(row['num_closed_issues']))
+
     dates = []
     for row in data:
         date = datetime.strptime(row['date'], '%Y-%m-%d').date()
         dates.append(date)
 
-    plt.plot(dates, num_open_issues)
-    plt.ylabel("Number of Issues Open")
-    plt.xlabel("Date")
+    fig, axs = plt.subplots(2)
+    axs[0].plot(dates, num_open_issues)
+    axs[0].set_title("Open Issues")
+    axs[1].plot(dates, num_closed_issues)
+    axs[1].set_title("Closed Issues")
+
+    for ax in axs.flat:
+        ax.set(xlabel='Date', ylabel='# of Issues')
 
     plt.show()
 
