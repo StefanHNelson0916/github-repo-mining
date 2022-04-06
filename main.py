@@ -16,10 +16,11 @@ if __name__ == '__main__':
             sys.exit("User Exit")
         stageInput = int(input("Which stage would you like to run (0 = Exit, 1, 2, 3, 4): "))
 
-    while importInput != 0 and importInput != 1 and importInput != 2:
-        if importInput == 0:
-            sys.exit("User Exit")
-        importInput = int(input("Would you like to run the import process? (0 = Exit, 1 = Yes, 2 = No): "))
+    if stageInput != 4:
+        while importInput != 0 and importInput != 1 and importInput != 2:
+            if importInput == 0:
+                sys.exit("User Exit")
+            importInput = int(input("Would you like to run the import process? (0 = Exit, 1 = Yes, 2 = No): "))
 
     if stageInput == 1:
         if importInput == 1:
@@ -37,7 +38,5 @@ if __name__ == '__main__':
 
         print('TODO')
     elif stageInput == 4:
-        if importInput == 1:
-            print('TODO')
 
         print('TODO')
